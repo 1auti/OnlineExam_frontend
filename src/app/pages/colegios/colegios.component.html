@@ -1,0 +1,99 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-4xl font-bold text-gray-800 mb-8">Campus Virtual</h1>
+  
+  <div class="tabs">
+    <ul class="tab-list">
+      <li [class.active]="selectedTab === 'colegios'" (click)="setSelectedTab('colegios')">Colegios</li>
+      <li [class.active]="selectedTab === 'aulas'" (click)="setSelectedTab('aulas')">Aulas</li>
+      <li [class.active]="selectedTab === 'estudiantes'" (click)="setSelectedTab('estudiantes')">Estudiantes</li>
+    </ul>
+
+    <div class="tab-content" *ngIf="selectedTab === 'colegios'">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="card" *ngFor="let colegio of colegios">
+          <img [src]="colegio.imagenUrl" [alt]="'Imagen de ' + colegio.nombre" class="w-full h-48 object-cover">
+          <div class="card-header">
+            <h3 class="card-title">{{ colegio.nombre }}</h3>
+            <p class="card-description">{{ colegio.direccion }}</p>
+          </div>
+          <div class="card-content">
+            <span class="badge">{{ colegio.tipo }}</span>
+            <button class="btn-ghost" (click)="toggleColegioInfo(colegio.id)">
+              <i class="fas" [ngClass]="{'fa-chevron-up': expandedColegioId === colegio.id, 'fa-chevron-down': expandedColegioId !== colegio.id}"></i>
+              <span class="sr-only">Toggle info</span>
+            </button>
+          </div>
+          <div class="card-expanded-content" *ngIf="expandedColegioId === colegio.id">
+            <p><strong>Año de fundación:</strong> {{ colegio.anoFundacion }}</p>
+            <p><strong>Cantidad de estudiantes:</strong> {{ colegio.cantidadEstudiantes }}</p>
+            <p>{{ colegio.descripcion }}</p>
+          </div>
+          <div class="card-footer">
+            <button class="btn" (click)="verAulas(colegio.id)">
+              <i class="fas fa-school mr-2"></i>
+              Ver Aulas
+            </button>
+            <button class="btn" (click)="verProfesores(colegio.id)">
+              <i class="fas fa-users mr-2"></i>
+              Ver Profesores
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" *ngIf="selectedTab === 'aulas'">
+      <div class="scroll-area">
+        <div class="card" *ngFor="let aula of aulas">
+          <div class="card-header">
+            <h3 class="card-title">{{ aula.name }}</h3>
+            <p class="card-description">{{ aula.grade }}° "{{ aula.section }}" - Prof. {{ aula.teacherName }}</p>
+          </div>
+          <div class="card-content">
+            <div class="flex justify-between items-center">
+              <span>{{ aula.totalStudents }} estudiantes</span>
+              <span class="text-2xl font-bold" [ngClass]="getScoreColor(aula.averageScore)">
+                {{ aula.averageScore.toFixed(1) }}
+              </span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button class="btn-outline" (click)="verRankingAula(aula.id)">
+              <i class="fas fa-trophy mr-2"></i>
+              Ver ranking de estudiantes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" *ngIf="selectedTab === 'estudiantes'">
+      <div class="scroll-area">
+        <div class="card" *ngFor="let estudiante of estudiantes">
+          <div class="card-header">
+            <h3 class="card-title">{{ estudiante.name }} {{ estudiante.lastName }}</h3>
+          </div>
+          <div class="card-content">
+            <div class="flex justify-between items-center">
+              <span class="text-2xl font-bold" [ngClass]="getScoreColor(estudiante.averageScore)">
+                {{ estudiante.averageScore.toFixed(1) }}
+              </span>
+              <span>Asistencia: {{ estudiante.attendance }}%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-8 flex justify-center space-x-4">
+    <button class="btn" (click)="verRankingColegios()">
+      <i class="fas fa-trophy mr-2"></i>
+      Ver Ranking de Colegios
+    </button>
+    <button class="btn" (click)="verRankingAulas()">
+      <i class="fas fa-chart-bar mr-2"></i>
+      Ver Ranking de Aulas
+    </button>
+  </div>
+</div>

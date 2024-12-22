@@ -1,0 +1,76 @@
+<div class="flex flex-col min-h-screen bg-gradient-to-b from-blue-100 to-white">
+  <main class="flex-grow container mx-auto px-4 py-8">
+    <h1 [@fadeIn] class="text-5xl font-bold mb-6 text-blue-900 text-center">Bienvenido al Campus Virtual</h1>
+    <p [@fadeIn] class="mb-8 text-blue-800 text-center text-xl">Explora nuestros cursos y recursos educativos para potenciar tu aprendizaje.</p>
+
+    <!-- Sección de Beneficios -->
+    <section class="mt-16 slide-up">
+      <h2 class="text-3xl font-semibold text-blue-900 mb-8 text-center">¿Por qué elegirnos?</h2>
+      <div [@staggeredFadeIn] class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div *ngFor="let beneficio of beneficios" class="bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+          <div class="flex items-center mb-4">
+            <i [class]="beneficio.icon + ' text-3xl text-blue-500'"></i>
+            <h3 class="font-semibold text-xl text-blue-800 ml-3">{{beneficio.titulo}}</h3>
+          </div>
+          <p class="text-gray-600">{{beneficio.descripcion}}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección de Colegios -->
+    <section class="mt-20 bg-blue-50 p-8 rounded-lg slide-up">
+      <h2 class="text-3xl font-semibold text-blue-900 mb-8 text-center">Colegios que están utilizando nuestra plataforma</h2>
+      <div [@staggeredFadeIn] class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div *ngFor="let colegio of colegios" class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+          <img [src]="colegio.imagen" [alt]="colegio.nombre" class="w-full h-48 object-cover">
+          <div class="p-6">
+            <h3 class="font-semibold text-xl text-blue-800 mb-2">{{colegio.nombre}}</h3>
+            <p class="text-gray-600">{{colegio.descripcion}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="text-center mt-8">
+        <button (click)="irAColegios()" class="bg-blue-600 text-white px-6 py-3 rounded-full text-lg hover:bg-blue-700 transition duration-300 flex items-center mx-auto">
+          Ver todos los colegios
+          <i class="fas fa-chevron-right ml-2"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- Sección de Cursos Destacados -->
+    <section class="mt-20 slide-up">
+      <h2 class="text-3xl font-semibold text-blue-900 mb-8 text-center">Cursos Destacados</h2>
+      <div [@staggeredFadeIn] class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div *ngFor="let curso of cursos" class="bg-white p-6 rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+          <h3 class="font-semibold text-xl text-blue-800 mb-2">{{curso.titulo}}</h3>
+          <p class="text-gray-600 mb-4">{{curso.descripcion}}</p>
+          <a [href]="curso.enlace" class="text-blue-600 hover:underline flex items-center">
+            Ver más
+            <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="mt-20 bg-blue-50 p-8 rounded-lg slide-up">
+      <h2 class="text-3xl font-semibold text-blue-900 mb-8 text-center">Lo que dicen nuestros estudiantes</h2>
+      <div [@staggeredFadeIn] class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div *ngFor="let testimonio of testimonios" class="bg-white p-6 rounded-lg shadow-lg text-center">
+          <p class="italic text-gray-600 mb-4">{{testimonio.texto}}</p>
+          <p class="font-semibold text-blue-900">{{testimonio.autor}}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Llamado a la Acción -->
+    <section class="mt-20 text-center slide-up">
+      <h2 class="text-3xl font-semibold text-blue-900 mb-4">¡Comienza hoy mismo!</h2>
+      <p class="mb-8 text-blue-800">Regístrate y accede a todos nuestros recursos educativos para potenciar tu aprendizaje.</p>
+      <a href="/registro" class="bg-blue-600 text-white px-8 py-4 rounded-full text-lg hover:bg-blue-700 transition duration-300 inline-flex items-center">
+        Regístrate ahora
+        <i class="fas fa-chevron-right ml-2"></i>
+      </a>
+    </section>
+  </main>
+</div>

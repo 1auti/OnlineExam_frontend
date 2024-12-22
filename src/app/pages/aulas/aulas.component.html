@@ -1,0 +1,36 @@
+<div class="container mx-auto px-4 py-8">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">Aulas del Colegio</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let aula of aulas" class="bg-white rounded-lg shadow-md overflow-hidden">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">{{aula.nombre}}</h3>
+        <p class="text-gray-600 mb-2">Capacidad: {{aula.capacidad}}</p>
+        <p class="text-gray-600 mb-4">Nivel: {{aula.nivel}}</p>
+        <div class="flex flex-col space-y-2">
+          <button 
+            (click)="verEstudiantes(aula.id)" 
+            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition duration-300 flex items-center justify-center"
+          >
+            <i class="fas fa-users mr-2"></i>
+            Ver Estudiantes
+          </button>
+          <button 
+            (click)="gestionarEstudiantes(aula.id)" 
+            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded transition duration-300 flex items-center justify-center"
+          >
+            <i class="fas fa-user-cog mr-2"></i>
+            Gestionar Estudiantes
+          </button>
+          <button 
+            (click)="verRankingAula(aula.id)" 
+            class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-4 rounded transition duration-300 flex items-center justify-center"
+          >
+            <i class="fas fa-trophy mr-2"></i>
+            Ver Ranking de Estudiantes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</div>

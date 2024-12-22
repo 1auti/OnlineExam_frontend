@@ -1,0 +1,36 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-gray-800 mb-6">Ranking de Aulas</h1>
+
+  <app-ranking
+    [title]="'Ranking de Aulas'"
+    [subtitle]="'Rendimiento promedio por aula'"
+    [items]="classrooms"
+    [type]="'classroom'"
+    [showDetails]="true">
+    <ng-template #itemTemplate let-classroom>
+      <div class="flex items-center justify-between w-full p-4 border-b border-gray-200">
+        <div>
+          <h3 class="text-lg font-medium text-gray-900">
+            {{ classroom.name }}
+          </h3>
+          <p class="text-sm text-gray-500">
+            {{ classroom.grade }} "{{ classroom.section }}" - Prof. {{ classroom.teacherName }}
+          </p>
+        </div>
+        <div class="text-right">
+          <p class="text-2xl font-bold" [ngClass]="getScoreColor(classroom.averageScore)">
+            {{ classroom.averageScore.toFixed(1) }}
+          </p>
+          <p class="text-xs text-gray-500">Promedio</p>
+        </div>
+      </div>
+      <div class="mt-2 flex justify-between items-center">
+        <span class="text-sm text-gray-600">{{ classroom.totalStudents }} estudiantes</span>
+        <button (click)="viewClassroomDetails(classroom.id)" 
+                class="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition duration-300">
+          Ver detalles
+        </button>
+      </div>
+    </ng-template>
+  </app-ranking>
+</div>

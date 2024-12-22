@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.5s ease-out forwards;
+}
+
+[appScrollAnimation] {
+  opacity: 0;
+}
+
+body {
+  @apply font-sans text-blue-900 bg-blue-100;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif;
+}

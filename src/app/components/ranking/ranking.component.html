@@ -1,0 +1,83 @@
+<div class="w-full max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+  <!-- Header Section -->
+  <div class="px-6 py-4 border-b border-gray-200">
+    <h2 class="text-2xl font-bold text-gray-800">{{ title }}</h2>
+    <p *ngIf="subtitle" class="text-sm text-gray-600 mt-1">{{ subtitle }}</p>
+    
+    <!-- Metadata Section -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+      <div class="text-center p-2 bg-gray-50 rounded-lg">
+        <p class="text-sm text-gray-600">{{ getMetadataLabel('total') }}</p>
+        <p class="text-lg font-bold text-gray-800">{{ metadata.total }}</p>
+      </div>
+      <div class="text-center p-2 bg-gray-50 rounded-lg">
+        <p class="text-sm text-gray-600">Nota más alta</p>
+        <p class="text-lg font-bold text-green-600">{{ metadata.highestScore }}</p>
+      </div>
+      <div class="text-center p-2 bg-gray-50 rounded-lg">
+        <p class="text-sm text-gray-600">Promedio</p>
+        <p class="text-lg font-bold text-blue-600">{{ metadata.averageScore | number:'1.1-1' }}</p>
+      </div>
+      <div class="text-center p-2 bg-gray-50 rounded-lg">
+        <p class="text-sm text-gray-600">Nota más baja</p>
+        <p class="text-lg font-bold text-red-600">{{ metadata.lowestScore }}</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ranked Items List -->
+  <div class="divide-y divide-gray-200">
+    <div *ngFor="let item of paginatedItems; let i = index; trackBy: trackById"
+         class="flex items-center p-4 hover:bg-gray-50 transition-all duration-200"
+         [@itemAnimation]>
+      
+      <!-- Position/Medal -->
+      <div class="flex-shrink-0 w-16 text-center">
+        <div [ngClass]="getMedalColor((currentPage - 1) * itemsPerPage + i + 1)"
+             class="w-8 h-8 mx-auto rounded-full flex items-center justify-center">
+          <span class="text-white font-bold">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</span>
+        </div>
+      </div>
+
+      <!-- Item Info -->
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center justify-between">
+          <div class="flex-1 pr-4">
+            <h3 class="text-sm font-medium text-gray-900 truncate">
+              {{ item.name }}
+            </h3>
+            <p *ngIf="showDetails" class="text-sm text-gray-500">
+              {{ getItemDetails(item) }}
+            </p>
+          </div>
+          <div class="flex-shrink-0 text-right">
+            <p [ngClass]="getScoreColor(item.averageScore)"
+               class="text-2xl font-bold">
+              {{ item.averageScore }}
+            </p>
+            <p class="text-xs text-gray-500">promedio</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-between items-center">
+    <button 
+      (click)="changePage(currentPage - 1)" 
+      [disabled]="currentPage === 1"
+      class="px-4 py-2 bg-blue-500 text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      Anterior
+    </button>
+    <span class="text-gray-600">Página {{ currentPage }} de {{ totalPages }}</span>
+    <button 
+      (click)="changePage(currentPage + 1)" 
+      [disabled]="currentPage === totalPages"
+      class="px-4 py-2 bg-blue-500 text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      Siguiente
+    </button>
+  </div>
+</div>

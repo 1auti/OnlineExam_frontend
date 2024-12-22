@@ -1,0 +1,151 @@
+.course-calendar {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .calendar-navigation {
+    display: flex;
+    align-items: center;
+  }
+  
+  .calendar-navigation button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 5px 10px;
+  }
+  
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+  
+  .calendar-weekdays {
+    display: contents;
+  }
+  
+  .weekday {
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #f0f0f0;
+  }
+  
+  .calendar-days {
+    display: contents;
+  }
+  
+  .calendar-day {
+    text-align: center;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    position: relative;
+  }
+  
+  .calendar-day:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .other-month {
+    color: #aaa;
+  }
+  
+  .has-event {
+    font-weight: bold;
+  }
+  
+  .event-indicator {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: #007bff;
+    border-radius: 50%;
+  }
+  
+  .course-resources {
+    margin-top: 30px;
+  }
+  
+  .resource-tabs {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .resource-tabs button {
+    background: none;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+  }
+  
+  .resource-tabs button.active {
+    border-bottom-color: #007bff;
+  }
+  
+  .resource-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .resource-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .resource-list i {
+    margin-right: 10px;
+  }
+  
+  .event-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .event-modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 400px;
+  }
+  
+  .event-modal-content button {
+    margin-top: 15px;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 600px) {
+    .calendar-grid {
+      font-size: 0.8em;
+    }
+  
+    .calendar-day {
+      padding: 5px;
+    }
+  }

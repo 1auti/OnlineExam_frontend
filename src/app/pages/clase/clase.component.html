@@ -1,0 +1,90 @@
+<div class="min-h-screen bg-gray-100">
+    <!-- Estado de carga -->
+    <div *ngIf="loading" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white p-8 rounded-lg shadow-xl flex flex-col items-center">
+        <div class="flex space-x-2 mb-4">
+          <div class="w-4 h-4 bg-blue-500 rounded-full animate-bounce" style="animation-delay: -0.32s"></div>
+          <div class="w-4 h-4 bg-blue-500 rounded-full animate-bounce" style="animation-delay: -0.16s"></div>
+          <div class="w-4 h-4 bg-blue-500 rounded-full animate-bounce"></div>
+        </div>
+        <p class="text-gray-700">Cargando información de la clase, por favor espere...</p>
+      </div>
+    </div>
+  
+    <!-- Mensaje de error -->
+    <div *ngIf="error" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white p-6 rounded-lg shadow-xl max-w-md w-full">
+        <h3 class="text-xl font-bold text-red-600 mb-4">Error</h3>
+        <p class="text-gray-700">{{error}}</p>
+        <button (click)="volverAtras()" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">
+          Volver
+        </button>
+      </div>
+    </div>
+  
+    <!-- Contenido de la clase -->
+    <div *ngIf="!loading && !error && clase" class="container mx-auto px-4 py-8">
+      <!-- Encabezado -->
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+        <div class="p-6">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
+            <div>
+              <h1 class="text-3xl font-bold text-gray-900 mb-2">{{clase.titulo}}</h1>
+              <p class="text-gray-600">Profesor: {{clase.profesor}}</p>
+            </div>
+            <span [class]="'px-3 py-1 rounded-full text-sm font-medium mt-2 sm:mt-0 ' + getEstadoClase(clase.estado).color">
+              {{getEstadoClase(clase.estado).texto}}
+            </span>
+          </div>
+          <div class="flex flex-wrap items-center text-sm text-gray-500">
+            <div class="flex items-center mr-4 mb-2 sm:mb-0">
+              <i class="fas fa-clock mr-2"></i>
+              <span>{{clase.duracion}}</span>
+            </div>
+            <div class="flex items-center">
+              <i class="fas fa-calendar mr-2"></i>
+              <span>{{clase.fechaClase | date:'dd/MM/yyyy HH:mm'}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Descripción y contenido -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="lg:col-span-2 space-y-6">
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Descripción</h2>
+            <p class="text-gray-700">{{clase.descripcion}}</p>
+          </div>
+  
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">Contenido de la clase</h2>
+            <p class="text-gray-700 whitespace-pre-line">{{clase.contenido}}</p>
+          </div>
+        </div>
+  
+        <!-- Recursos -->
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <h2 class="text-xl font-semibold mb-4">Recursos</h2>
+          <div class="space-y-3">
+            <a *ngFor="let recurso of clase.recursos" 
+               [href]="recurso.url"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="flex items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition duration-300">
+              <i [class]="'fas ' + getIconoRecurso(recurso.tipo) + ' text-blue-500 mr-3'"></i>
+              <span class="text-gray-700">{{recurso.nombre}}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Botón volver -->
+      <div class="mt-8 text-center">
+        <button (click)="volverAtras()" 
+                class="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+          Volver al curso
+        </button>
+      </div>
+    </div>
+  </div>

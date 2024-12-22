@@ -1,0 +1,105 @@
+<div class="max-w-7xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-8 text-center text-gray-800">{{examen.titulo}}</h1>
+  
+    <div class="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
+      <!-- Navegación de preguntas -->
+      <div class="w-full md:w-1/4 bg-gray-100 p-4 border-r border-gray-200">
+        <h2 class="text-lg font-semibold mb-4 text-gray-800">Preguntas</h2>
+        <ul class="space-y-2">
+          <li *ngFor="let pregunta of examen.preguntas; let i = index" 
+              class="cursor-pointer p-2 rounded-md transition duration-300"
+              [ngClass]="{'bg-blue-100 text-blue-800': preguntaActual === i, 'hover:bg-gray-200': preguntaActual !== i}"
+              (click)="irAPregunta(i)">
+            <span class="font-medium">{{i + 1}}.</span> {{pregunta.enunciado | slice:0:30}}...
+          </li>
+        </ul>
+      </div>
+  
+      <!-- Contenido principal -->
+      <div class="w-full md:w-3/4">
+        <!-- Información del examen -->
+        <div class="p-6 bg-gray-50 border-b border-gray-200">
+          <div class="flex justify-between items-center mb-4">
+            <span class="text-lg font-semibold text-gray-700">Información del Examen</span>
+            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+              {{examen.estado}}
+            </span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <p class="text-sm text-gray-600">Fecha de inicio:</p>
+              <p class="font-medium">{{examen.fechaInicio | date:'dd/MM/yyyy HH:mm'}}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600">Fecha de fin:</p>
+              <p class="font-medium">{{examen.fechaFin | date:'dd/MM/yyyy HH:mm'}}</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600">Duración:</p>
+              <p class="font-medium">{{examen.duracion}} minutos</p>
+            </div>
+            <div>
+              <p class="text-sm text-gray-600">Intentos permitidos:</p>
+              <p class="font-medium">{{examen.intentosPermitidos}}</p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Instrucciones -->
+        <div class="p-6 border-b border-gray-200">
+          <h2 class="text-xl font-semibold mb-4 text-gray-800">Instrucciones</h2>
+          <div class="prose prose-sm max-w-none">
+            <p>{{examen.instrucciones}}</p>
+          </div>
+        </div>
+  
+        <!-- Pregunta actual -->
+        <div class="p-6">
+          <h2 class="text-xl font-semibold mb-4 text-gray-800">Pregunta {{preguntaActual + 1}}</h2>
+          <div class="bg-gray-50 p-4 rounded-lg">
+            <h3 class="text-lg font-medium mb-4">{{examen.preguntas[preguntaActual].enunciado}}</h3>
+            <div [ngSwitch]="examen.preguntas[preguntaActual].tipo">
+              <!-- Opción múltiple -->
+              <div *ngSwitchCase="'multiple'" class="space-y-2">
+                <div *ngFor="let opcion of examen.preguntas[preguntaActual].opciones; let j = index" class="flex items-center">
+                  <input type="radio" [id]="'pregunta' + preguntaActual + '_opcion' + j" [name]="'pregunta' + preguntaActual" class="mr-2">
+                  <label [for]="'pregunta' + preguntaActual + '_opcion' + j" class="text-gray-700">{{opcion}}</label>
+                </div>
+              </div>
+              <!-- Verdadero o Falso -->
+              <div *ngSwitchCase="'verdaderoFalso'" class="space-x-4">
+                <label class="inline-flex items-center">
+                  <input type="radio" [name]="'pregunta' + preguntaActual" value="true" class="mr-2">
+                  <span>Verdadero</span>
+                </label>
+                <label class="inline-flex items-center">
+                  <input type="radio" [name]="'pregunta' + preguntaActual" value="false" class="mr-2">
+                  <span>Falso</span>
+                </label>
+              </div>
+              <!-- Desarrollo -->
+              <div *ngSwitchCase="'desarrollo'">
+                <textarea rows="4" class="w-full p-2 border border-gray-300 rounded-md" [placeholder]="'Escribe tu respuesta aquí'"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Botones de navegación y envío -->
+        <div class="p-6 flex justify-between">
+          <button (click)="preguntaAnterior()" [disabled]="preguntaActual === 0" class="px-6 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition duration-300 disabled:opacity-50">
+            Pregunta Anterior
+          </button>
+          <button (click)="siguientePregunta()" [disabled]="preguntaActual === examen.preguntas.length - 1" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 disabled:opacity-50">
+            Siguiente Pregunta
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <div class="mt-6 text-center">
+      <button (click)="enviarExamen()" class="px-8 py-3 bg-green-500 text-white rounded-md hover:bg-green-600 transition duration-300">
+        Enviar Examen
+      </button>
+    </div>
+  </div>

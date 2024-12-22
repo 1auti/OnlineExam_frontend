@@ -1,0 +1,66 @@
+<div class="course-calendar">
+    <div class="calendar-header">
+      <h2>Calendario del Curso</h2>
+      <div class="calendar-navigation">
+        <button (click)="prevMonth()" aria-label="Mes anterior">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <span>{{ currentMonth | date:'MMMM yyyy' }}</span>
+        <button (click)="nextMonth()" aria-label="Mes siguiente">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+  
+    <div class="calendar-grid">
+      <div class="calendar-weekdays">
+        <div *ngFor="let day of weekDays" class="weekday">{{ day }}</div>
+      </div>
+      <div class="calendar-days">
+        <div *ngFor="let day of calendarDays" 
+             class="calendar-day" 
+             [class.other-month]="!isSameMonth(day, currentMonth)"
+             [class.has-event]="hasEvent(day)"
+             (click)="selectDay(day)">
+          {{ day.getDate() }}
+          <div *ngIf="hasEvent(day)" class="event-indicator"></div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="course-resources">
+      <h3>Recursos del Curso</h3>
+      <div class="resource-tabs">
+        <button (click)="selectTab('classes')" [class.active]="selectedTab === 'classes'">Clases</button>
+        <button (click)="selectTab('pdfs')" [class.active]="selectedTab === 'pdfs'">PDFs</button>
+        <button (click)="selectTab('exams')" [class.active]="selectedTab === 'exams'">Exámenes</button>
+      </div>
+      <div class="resource-list" [ngSwitch]="selectedTab">
+        <ul *ngSwitchCase="'classes'">
+          <li *ngFor="let event of getEventsByType('class')">
+            <i class="fas fa-video"></i> {{ event.title }}
+          </li>
+        </ul>
+        <ul *ngSwitchCase="'pdfs'">
+          <li *ngFor="let event of getEventsByType('pdf')">
+            <i class="fas fa-file-pdf"></i> {{ event.title }}
+          </li>
+        </ul>
+        <ul *ngSwitchCase="'exams'">
+          <li *ngFor="let event of getEventsByType('exam')">
+            <i class="fas fa-file-alt"></i> {{ event.title }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  
+    <div *ngIf="selectedEvent" class="event-modal">
+      <div class="event-modal-content">
+        <h3>{{ selectedEvent.title }}</h3>
+        <p>Fecha: {{ selectedEvent.date | date:'fullDate' }}</p>
+        <p>Tipo: {{ getEventTypeName(selectedEvent.type) }}</p>
+        <p *ngIf="selectedEvent.content">{{ selectedEvent.content }}</p>
+        <button (click)="closeEventModal()">Cerrar</button>
+      </div>
+    </div>
+  </div>

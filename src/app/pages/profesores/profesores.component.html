@@ -1,0 +1,106 @@
+<div class="container mx-auto px-4 py-8">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6">Profesores del Colegio</h2>
+  
+  <button (click)="toggleModo()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4">
+    {{ modoVisualizacion ? 'Gestionar Profesores' : 'Ver Profesores' }}
+  </button>
+
+  <div *ngIf="modoVisualizacion" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let profesor of profesores" class="bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
+      <div class="p-6">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">{{profesor.nombre}} {{profesor.apellido}}</h3>
+        <p class="text-gray-600 mb-4">Especialidad: {{profesor.especialidad}}</p>
+        <div class="text-sm text-gray-500 space-y-2">
+          <p>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            Experiencia: {{profesor.experiencia}} años
+          </p>
+          <p>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            {{profesor.email}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!modoVisualizacion">
+    <button (click)="crearProfesor()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mb-4">
+      Crear Nuevo Profesor
+    </button>
+
+    <div *ngIf="modoEdicion" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <h3 class="text-xl font-semibold mb-4">{{ profesorSeleccionado?.id === 0 ? 'Crear' : 'Editar' }} Profesor</h3>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="nombre">
+          Nombre
+        </label>
+        <input [(ngModel)]="profesorSeleccionado!.nombre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nombre" type="text" placeholder="Nombre">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="apellido">
+          Apellido
+        </label>
+        <input [(ngModel)]="profesorSeleccionado!.apellido" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="apellido" type="text" placeholder="Apellido">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="especialidad">
+          Especialidad
+        </label>
+        <input [(ngModel)]="profesorSeleccionado!.especialidad" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="especialidad" type="text" placeholder="Especialidad">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+          Email
+        </label>
+        <input [(ngModel)]="profesorSeleccionado!.email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email">
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="experiencia">
+          Experiencia (años)
+        </label>
+        <input [(ngModel)]="profesorSeleccionado!.experiencia" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="experiencia" type="number" placeholder="Experiencia">
+      </div>
+      <div class="flex items-center justify-between">
+        <button (click)="guardarProfesor()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+          Guardar
+        </button>
+        <button (click)="cancelarEdicion()" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+          Cancelar
+        </button>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto bg-white rounded-lg shadow overflow-y-auto relative">
+      <table class="border-collapse table-auto w-full whitespace-no-wrap bg-white table-striped relative">
+        <thead>
+          <tr class="text-left">
+            <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-3 text-gray-600 font-bold tracking-wider uppercase text-xs">Nombre</th>
+            <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-3 text-gray-600 font-bold tracking-wider uppercase text-xs">Apellido</th>
+            <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-3 text-gray-600 font-bold tracking-wider uppercase text-xs">Especialidad</th>
+            <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-3 text-gray-600 font-bold tracking-wider uppercase text-xs">Email</th>
+            <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-3 text-gray-600 font-bold tracking-wider uppercase text-xs">Experiencia</th>
+            <th class="bg-gray-100 sticky top-0 border-b border-gray-200 px-6 py-3 text-gray-600 font-bold tracking-wider uppercase text-xs">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let profesor of profesores" class="hover:bg-gray-100">
+            <td class="border-b border-gray-200 px-6 py-4">{{profesor.nombre}}</td>
+            <td class="border-b border-gray-200 px-6 py-4">{{profesor.apellido}}</td>
+            <td class="border-b border-gray-200 px-6 py-4">{{profesor.especialidad}}</td>
+            <td class="border-b border-gray-200 px-6 py-4">{{profesor.email}}</td>
+            <td class="border-b border-gray-200 px-6 py-4">{{profesor.experiencia}} años</td>
+            <td class="border-b border-gray-200 px-6 py-4">
+              <button (click)="editarProfesor(profesor)" class="text-blue-500 hover:text-blue-700 mr-2">Editar</button>
+              <button (click)="eliminarProfesor(profesor.id)" class="text-red-500 hover:text-red-700">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

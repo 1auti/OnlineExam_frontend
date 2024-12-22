@@ -1,0 +1,31 @@
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">Ranking de Estudiantes</h1>
+    <h2 class="text-xl text-gray-600 mb-6">{{ aulaInfo.nombre }} - {{ aulaInfo.grado }}° "{{ aulaInfo.seccion }}"</h2>
+  
+    <app-ranking
+      [title]="'Ranking de Estudiantes'"
+      [subtitle]="'Rendimiento promedio por estudiante'"
+      [items]="students"
+      [type]="'classroom'"
+      [showDetails]="false"
+    >
+      <ng-template #itemTemplate let-student>
+        <div class="flex items-center justify-between w-full">
+          <div>
+            <h3 class="text-lg font-medium text-gray-900">
+              {{ student.name }} {{ student.lastName }}
+            </h3>
+          </div>
+          <div class="text-right">
+            <p class="text-2xl font-bold" [ngClass]="getScoreColor(student.averageScore)">
+              {{ student.averageScore.toFixed(1) }}
+            </p>
+            <p class="text-xs text-gray-500">promedio</p>
+          </div>
+        </div>
+        <div class="mt-2 flex justify-between items-center">
+          <span class="text-sm text-gray-600">Asistencia: {{ student.attendance }}%</span>
+        </div> 
+      </ng-template>
+    </app-ranking>
+  </div>

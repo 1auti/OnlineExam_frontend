@@ -1,0 +1,44 @@
+:host {
+    display: block;
+    background-color: #f9fafb;
+  }
+  
+  .aspect-square {
+    aspect-ratio: 1 / 1;
+  }
+  
+  .calendar-day {
+    &:hover {
+      background-color: #f3f4f6;
+    }
+    
+    &.has-event {
+      background-color: #dbeafe;
+      
+      &:hover {
+        background-color: #bfdbfe;
+      }
+    }
+  }
+  
+  .resource-item {
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      transform: translateX(4px);
+      background-color: #f3f4f6;
+    }
+  }
+  
+  .tab-button {
+    transition: all 0.2s ease-in-out;
+    
+    &:hover {
+      background-color: #f3f4f6;
+    }
+    
+    &.active {
+      color: #3b82f6;
+      border-color: #3b82f6;
+    }
+  }
